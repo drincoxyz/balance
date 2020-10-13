@@ -70,12 +70,12 @@ function Remove(id)
 end
 
 -- returns the team balance
--- ordered from under-balanced to over-balanced
+-- ordered from over-balanced to under-balanced
 function Get()
 	-- cache required
 	if cache then
 		local count = {}
-		local over
+		local under
 		
 		-- empty team balance
 		table.Empty(bal)
@@ -85,17 +85,17 @@ function Get()
 			table_insert(count, {id = id, num = team_NumPlayers(id)})
 		end
 
-		-- sort team counts from highest to lowest
-		table_sort(count, function(a, b) return a.num > b.num end)
+		-- sort team counts from lowest to highest
+		table_sort(count, function(a, b) return a.num <= b.num end)
 
 		for i, data in pairs(count) do
 			-- this is the first entry
 			if #bal < 1 then
-				-- overbalanced = highest player count
-				over = data.num
+				-- under-balanced = lowest player count
+				under = data.num
 			end
 			-- insert entry
-			table_insert(bal, {id = data.id, num = over - data.num})
+			table_insert(bal, {id = data.id, num = data.num - under})
 		end
 
 		-- reverse team balance
