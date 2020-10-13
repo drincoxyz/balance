@@ -3,7 +3,6 @@
 -- serverside module
 if !SERVER then return end
 -- reload disabled
--- comment for testing
  if istable(balance) then return end
 
 module("balance", package.seeall)
@@ -24,20 +23,12 @@ local table_insert  = table.insert
 local table_Reverse = table.Reverse
 
 -- team balance
--- switch comment for testing
--- bal = bal || {}
 local bal = {}
 
 -- team balance cache flag
--- switch comment for testing
--- cache = cache || false
 local cache = false
 
 -- joinable teams
--- switch comment for testing
--- joinable  = joinable  || {}
--- joinable_ = joinable_ || {}
--- joinnum   = joinnum   || 0
 local joinable  = {}
 local joinable_ = {}
 local joinnum   = 0
