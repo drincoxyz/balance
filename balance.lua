@@ -60,6 +60,11 @@ function Remove(id)
 	Cache()
 end
 
+-- returns whether a team is added to the balance system
+function IsAdded(id)
+	return isnumber(joinable_[id])
+end
+
 -- returns the team balance
 -- ordered from over-balanced to under-balanced
 function Get()
