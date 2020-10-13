@@ -126,3 +126,8 @@ hook.Add("PlayerDisconnected", "balance", function(pl)
 	-- flag for cache
 	Cache()
 end)
+-- team creation event
+hook.Add("CreateTeams", "balance", function()
+	-- setup team balance
+	gamemode.Call "SetupTeamBalance"
+end)
