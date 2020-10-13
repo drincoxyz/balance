@@ -42,28 +42,31 @@ local joinable  = {}
 local joinable_ = {}
 local joinnum   = 0
 
--- unpatched team.SetUp
--- switch comment for testing
--- team_SetUp = team_SetUp || team.SetUp
-local team_SetUp = team.SetUp
-
 -- marks team balance for cache
 -- doesn't cache until Get is called once after setting
 local function Cache()
 	cache = true
 end
 
--- patched team.SetUp
-function team.SetUp(id, name, col, join)
-	-- register joinable team
-	if join && !joinable_[id] then
-		joinable_[id] = table.insert(joinable, id)
-		joinnum       = joinnum + 1
-	end
+-- adds a team to the balance system
+function Add(id)
+	-- team already in system
+	if joinable_[id] then return end
+	-- register team
+	joinable_[id] = table.insert(joinable, id)
 	-- flag for cache
 	Cache()
-	-- call original function
-	return team_SetUp(id, name, col, join)
+end
+
+-- removes a team from the balance system
+function Remove(id)
+	-- team not in system
+	if !joinable_[id] then return end
+	-- de-register team
+	table.remove(joinable, joinable_[id])
+	joinable_[id] = nil
+	-- flag for cache
+	Cache()
 end
 
 -- returns the team balance
