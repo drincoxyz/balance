@@ -35,7 +35,7 @@ This returns an ordered, cached list describing the current balance of every rel
 
 The first teams in the list are considered the most over-balanced teams, while the last teams are the most under-balanced teams, in terms of player count.
 
-Each entry in this list contains a number that represents how many less players that team has compared to the most over-balanced team(s). As you go down the list, this number will naturally decrease as it reaches the bottom (over-balanced).
+Each entry in this list contains a number that represents how many more players that team has compared to the most under-balanced team(s). As you go down the list, this number will naturally decrease as it reaches the bottom (under-balanced).
 
 While this library doesn't auto-balance the teams for you, this function is the real meat of the library, as it provides the information needed to do this on a per-gamemode basis.
 
