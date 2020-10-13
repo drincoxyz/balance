@@ -39,6 +39,12 @@ Each entry in this list contains a number that represents how many more players 
 
 While this library doesn't auto-balance the teams for you, this function is the real meat of the library, as it provides the information needed to do this on a per-gamemode basis.
 
+```lua
+print(balance.Test(Entity(1), TEAM_RED))
+```
+
+This will print either true, false, or nil based on several criteria. True means the player is permitted by the balance system to join the red team, false if they aren't permitted, or nil if that player is already on the team being tested (nil is used because this is outside the scope of team balancing). It's a quick way to test whether a change in teams would cause an imbalance, and is primarily suited for use in the `GM:PlayerCanJoinTeam` hook.
+
 ## License
 
 This is licensed under the [DBAD License](license.md).

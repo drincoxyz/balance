@@ -25,6 +25,9 @@ local table_Reverse = table.Reverse
 -- team balance
 local bal = {}
 
+-- over-balance threshold
+local max = 3
+
 -- team balance cache flag
 local cache = false
 
@@ -103,12 +106,51 @@ function Get()
 	return bal
 end
 
+-- sets over-balance threshold
+function SetMax(val)
+	max = math.max(0, tonumber(val) || max)
+end
+-- returns over-balance threshold
+function GetMax()
+	return max
+end
+
 -- attempts to auto-balance the teams
 function Auto()
 	-- don't auto-balance if not needed
 	if !bal[1] || bal[1].num < 1 then return false end
 
 	-- auto-balance successful
+	return true
+end
+
+-- returns whether a player can join a team within balance
+function Test(pl, id)
+	local cur = pl:Team()
+	-- requested team is the current team
+	if cur == id then return nil end
+	-- current team is included in balance
+	if IsAdded(cur) then
+		-- requested team is included in balance
+		if IsAdded(id) then
+			for i, data in pairs(bal) do
+				-- skip teams under balance threshold
+				if data.num < max - 1 then continue end
+				-- current team is under-balanced
+				if data.id != cur then return false end
+			end
+		end
+	-- current team is not included in balance
+	else
+		for i, data in pairs(bal) do
+			-- skip teams under balance threshold
+			if data.num < max - 1 then continue end
+			-- requested team is over-balanced
+			if data.id == id then return false end
+		end
+	end
+
+	-- permit join
 	return true
 end
 
